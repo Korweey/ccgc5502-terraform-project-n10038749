@@ -1,1 +1,15 @@
-# rgroup-n10038749 module: variables.tf
+variable "rg_name" {
+  description = "Name of the resource group to create"
+  type        = string
+}
+
+variable "location" {
+  description = "Azure region for the resource group"
+  type        = string
+}
+
+variable "tags" {
+  description = "Common tags applied to the resource group"
+  type        = map(string)
+  default     = {}
+}
