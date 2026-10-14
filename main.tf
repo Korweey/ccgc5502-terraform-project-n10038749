@@ -33,3 +33,16 @@ module "common" {
   sa_name  = "${var.humber_id}sa"
   tags     = local.common_tags
 }
+
+module "vmlinux" {
+  source                = "./modules/vmlinux-n10038749"
+  rg_name                = module.rgroup.rg_name
+  location               = var.location
+  name_prefix            = var.humber_id
+  subnet_id              = module.network.subnet_id
+  admin_username         = var.admin_username
+  ssh_public_key         = file(pathexpand(var.ssh_public_key_path))
+  ssh_private_key_path   = pathexpand(var.ssh_private_key_path)
+  storage_account_uri    = module.common.storage_account_primary_blob_endpoint
+  tags                   = local.common_tags
+}

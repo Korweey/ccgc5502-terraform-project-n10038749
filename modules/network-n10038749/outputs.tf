@@ -9,6 +9,6 @@ output "subnet_name" {
 }
 
 output "subnet_id" {
-  description = "ID of the subnet"
+  description = "ID of the subnet for VM NIC attachment"
   value       = azurerm_subnet.subnet.id
 }

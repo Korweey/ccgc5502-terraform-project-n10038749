@@ -12,3 +12,8 @@ output "sa_name" {
   description = "Name of the storage account"
   value       = azurerm_storage_account.sa.name
 }
+
+output "storage_account_primary_blob_endpoint" {
+  description = "Primary blob endpoint of the storage account, used for VM boot diagnostics"
+  value       = azurerm_storage_account.sa.primary_blob_endpoint
+}

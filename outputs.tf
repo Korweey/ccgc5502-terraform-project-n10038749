@@ -27,3 +27,23 @@ output "storage_account_name" {
   description = "Name of the storage account"
   value       = module.common.sa_name
 }
+
+output "linux_vm_names" {
+  description = "Names of the Linux VMs"
+  value       = module.vmlinux.vm_names
+}
+
+output "linux_public_ips" {
+  description = "Public IPs of the Linux VMs"
+  value       = module.vmlinux.public_ips
+}
+
+output "linux_private_ips" {
+  description = "Private IPs of the Linux VMs"
+  value       = module.vmlinux.private_ips
+}
+
+output "linux_fqdns" {
+  description = "FQDNs of the Linux VMs"
+  value       = module.vmlinux.fqdns
+}

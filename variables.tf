@@ -27,3 +27,21 @@ variable "owner_name" {
   type        = string
   default     = "qawiyy.rabiu"
 }
+
+variable "admin_username" {
+  description = "Admin username for VM logins"
+  type        = string
+  default     = "azadmin"
+}
+
+variable "ssh_public_key_path" {
+  description = "Path to the SSH public key for Linux VM login"
+  type        = string
+  default     = "~/.ssh/id_rsa.pub"
+}
+
+variable "ssh_private_key_path" {
+  description = "Path to the SSH private key for the hostname provisioner"
+  type        = string
+  default     = "~/.ssh/id_rsa"
+}
