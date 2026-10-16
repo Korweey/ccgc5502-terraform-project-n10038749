@@ -42,11 +42,35 @@ variable "storage_account_uri" {
 variable "vm_size" {
   description = "VM size for the Linux VMs"
   type        = string
-  default     = "Standard_B1s"
+  default     = "Standard_F1ads_v7"
 }
 
 variable "tags" {
   description = "Common tags"
   type        = map(string)
   default     = {}
+}
+
+variable "image_publisher" {
+  description = "Image publisher"
+  type        = string
+  default     = "OpenLogic"
+}
+
+variable "image_offer" {
+  description = "Image offer"
+  type        = string
+  default     = "CentOS"
+}
+
+variable "image_sku" {
+  description = "Image SKU (Gen2 build of CentOS 8.2)"
+  type        = string
+  default     = "8_2-gen2"
+}
+
+variable "image_version" {
+  description = "Image version"
+  type        = string
+  default     = "latest"
 }

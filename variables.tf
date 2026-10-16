@@ -7,7 +7,7 @@ variable "humber_id" {
 variable "location" {
   description = "Azure region for all resources (must support availability zones)"
   type        = string
-  default     = "canadacentral"
+  default     = "eastus"
 }
 
 variable "environment" {
