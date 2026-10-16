@@ -47,3 +47,27 @@ output "linux_fqdns" {
   description = "FQDNs of the Linux VMs"
   value       = module.vmlinux.fqdns
 }
+
+output "windows_vm_names" {
+  description = "Names of the Windows VMs"
+  value       = module.vmwindows.vm_names
+}
+
+output "windows_public_ips" {
+  description = "Public IPs of the Windows VMs"
+  value       = module.vmwindows.public_ips
+}
+
+output "windows_private_ips" {
+  description = "Private IPs of the Windows VMs"
+  value       = module.vmwindows.private_ips
+}
+
+output "windows_fqdns" {
+  description = "FQDNs of the Windows VMs"
+  value       = module.vmwindows.fqdns
+}
+output "data_disk_names" {
+  description = "Names of the data disks"
+  value       = module.datadisk.disk_names
+}

@@ -1,1 +1,7 @@
-# datadisk-n10038749 module: outputs.tf
+output "disk_names" {
+  description = "Names of all data disks"
+  value = concat(
+    [for k, v in azurerm_managed_disk.linux : v.name],
+    azurerm_managed_disk.windows[*].name
+  )
+}

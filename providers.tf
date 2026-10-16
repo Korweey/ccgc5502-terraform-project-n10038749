@@ -4,9 +4,13 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 4.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
+    }
   }
 }
 
 provider "azurerm" {
   features {}
-} # project-n10038749 root module: providers.tf
+}

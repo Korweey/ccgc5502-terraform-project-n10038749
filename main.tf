@@ -46,3 +46,25 @@ module "vmlinux" {
   storage_account_uri    = module.common.storage_account_primary_blob_endpoint
   tags                   = local.common_tags
 }
+
+module "vmwindows" {
+  source              = "./modules/vmwindows-n10038749"
+  rg_name             = module.rgroup.rg_name
+  location            = var.location
+  name_prefix         = var.humber_id
+  subnet_id           = module.network.subnet_id
+  admin_username      = var.admin_username
+  storage_account_uri = module.common.storage_account_primary_blob_endpoint
+  tags                = local.common_tags
+}
+
+module "datadisk" {
+  source         = "./modules/datadisk-n10038749"
+  rg_name        = module.rgroup.rg_name
+  location       = var.location
+  name_prefix    = var.humber_id
+  linux_vm_ids   = module.vmlinux.vm_ids
+  linux_vm_zones = module.vmlinux.vm_zones
+  windows_vm_ids = module.vmwindows.vm_ids
+  tags           = local.common_tags
+}
