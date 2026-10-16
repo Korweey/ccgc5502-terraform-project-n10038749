@@ -18,12 +18,6 @@ output "fqdns" {
   value       = azurerm_public_ip.pip[*].fqdn
 }
 
-output "admin_password" {
-  description = "Generated admin password for the Windows VMs"
-  value       = random_password.admin.result
-  sensitive   = true
-}
-
 output "vm_ids" {
   description = "IDs of the Windows VMs"
   value       = azurerm_windows_virtual_machine.vm[*].id

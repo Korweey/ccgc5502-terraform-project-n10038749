@@ -71,3 +71,28 @@ output "data_disk_names" {
   description = "Names of the data disks"
   value       = module.datadisk.disk_names
 }
+
+output "load_balancer_name" {
+  description = "Name of the load balancer"
+  value       = module.loadbalancer.lb_name
+}
+
+output "load_balancer_public_ip" {
+  description = "Public IP of the load balancer"
+  value       = module.loadbalancer.lb_public_ip
+}
+
+output "load_balancer_fqdn" {
+  description = "FQDN of the load balancer"
+  value       = module.loadbalancer.lb_fqdn
+}
+
+output "database_name" {
+  description = "Name of the PostgreSQL server"
+  value       = module.database.db_name
+}
+
+output "database_fqdn" {
+  description = "FQDN of the PostgreSQL server"
+  value       = module.database.db_fqdn
+}

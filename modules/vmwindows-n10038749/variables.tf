@@ -46,3 +46,9 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "admin_password" {
+  description = "Admin password for the Windows VM"
+  type        = string
+  sensitive   = true
+}

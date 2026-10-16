@@ -1,1 +1,9 @@
-# database-n10038749 module: outputs.tf
+output "db_name" {
+  description = "Name of the PostgreSQL server"
+  value       = azurerm_postgresql_flexible_server.db.name
+}
+
+output "db_fqdn" {
+  description = "FQDN of the PostgreSQL server"
+  value       = azurerm_postgresql_flexible_server.db.fqdn
+}

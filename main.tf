@@ -35,16 +35,16 @@ module "common" {
 }
 
 module "vmlinux" {
-  source                = "./modules/vmlinux-n10038749"
-  rg_name                = module.rgroup.rg_name
-  location               = var.location
-  name_prefix            = var.humber_id
-  subnet_id              = module.network.subnet_id
-  admin_username         = var.admin_username
-  ssh_public_key         = file(pathexpand(var.ssh_public_key_path))
-  ssh_private_key_path   = pathexpand(var.ssh_private_key_path)
-  storage_account_uri    = module.common.storage_account_primary_blob_endpoint
-  tags                   = local.common_tags
+  source               = "./modules/vmlinux-n10038749"
+  rg_name              = module.rgroup.rg_name
+  location             = var.location
+  name_prefix          = var.humber_id
+  subnet_id            = module.network.subnet_id
+  admin_username       = var.admin_username
+  ssh_public_key       = file(pathexpand(var.ssh_public_key_path))
+  ssh_private_key_path = pathexpand(var.ssh_private_key_path)
+  storage_account_uri  = module.common.storage_account_primary_blob_endpoint
+  tags                 = local.common_tags
 }
 
 module "vmwindows" {
@@ -56,6 +56,7 @@ module "vmwindows" {
   admin_username      = var.admin_username
   storage_account_uri = module.common.storage_account_primary_blob_endpoint
   tags                = local.common_tags
+  admin_password      = var.windows_admin_password
 }
 
 module "datadisk" {
@@ -66,5 +67,23 @@ module "datadisk" {
   linux_vm_ids   = module.vmlinux.vm_ids
   linux_vm_zones = module.vmlinux.vm_zones
   windows_vm_ids = module.vmwindows.vm_ids
+  tags           = local.common_tags
+}
+
+module "loadbalancer" {
+  source        = "./modules/loadbalancer-n10038749"
+  rg_name       = module.rgroup.rg_name
+  location      = var.location
+  name_prefix   = var.humber_id
+  linux_nic_ids = module.vmlinux.nic_ids
+  tags          = local.common_tags
+}
+
+module "database" {
+  source         = "./modules/database-n10038749"
+  rg_name        = module.rgroup.rg_name
+  location       = var.location
+  name_prefix    = var.humber_id
+  admin_password = var.db_admin_password
   tags           = local.common_tags
 }

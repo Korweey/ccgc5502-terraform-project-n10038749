@@ -1,9 +1,3 @@
-resource "random_password" "admin" {
-  length           = 20
-  special          = true
-  override_special = "!#%*-_"
-}
-
 resource "azurerm_availability_set" "avset" {
   name                         = "${var.name_prefix}-w-avset"
   location                     = var.location
@@ -47,7 +41,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   location              = var.location
   size                  = var.vm_size
   admin_username        = var.admin_username
-  admin_password        = random_password.admin.result
+  admin_password        = var.admin_password
   availability_set_id   = azurerm_availability_set.avset.id
   network_interface_ids = [azurerm_network_interface.nic[count.index].id]
   tags                  = var.tags

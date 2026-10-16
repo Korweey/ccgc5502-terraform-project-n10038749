@@ -34,15 +34,15 @@ resource "azurerm_network_interface" "nic" {
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
-  for_each               = local.linux_vms
-  name                   = "${var.name_prefix}-u-vm${each.key}"
-  resource_group_name    = var.rg_name
-  location               = var.location
-  size                   = var.vm_size
-  admin_username         = var.admin_username
-  zone                   = each.value
-  network_interface_ids  = [azurerm_network_interface.nic[each.key].id]
-  tags                   = var.tags
+  for_each              = local.linux_vms
+  name                  = "${var.name_prefix}-u-vm${each.key}"
+  resource_group_name   = var.rg_name
+  location              = var.location
+  size                  = var.vm_size
+  admin_username        = var.admin_username
+  zone                  = each.value
+  network_interface_ids = [azurerm_network_interface.nic[each.key].id]
+  tags                  = var.tags
 
   admin_ssh_key {
     username   = var.admin_username

@@ -27,3 +27,8 @@ output "vm_zones" {
   description = "Availability zones of the Linux VMs, keyed by VM number"
   value       = { for k, v in azurerm_linux_virtual_machine.vm : k => v.zone }
 }
+
+output "nic_ids" {
+  description = "NIC IDs of the Linux VMs, keyed by VM number"
+  value       = { for k, v in azurerm_network_interface.nic : k => v.id }
+}

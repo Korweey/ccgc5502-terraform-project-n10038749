@@ -45,3 +45,15 @@ variable "ssh_private_key_path" {
   type        = string
   default     = "~/.ssh/id_rsa"
 }
+
+variable "windows_admin_password" {
+  description = "Admin password for the Windows VM (set via TF_VAR_windows_admin_password)"
+  type        = string
+  sensitive   = true
+}
+
+variable "db_admin_password" {
+  description = "Admin password for the PostgreSQL server (set via TF_VAR_db_admin_password)"
+  type        = string
+  sensitive   = true
+}
