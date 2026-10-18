@@ -2,9 +2,9 @@ resource "azurerm_availability_set" "avset" {
   name                         = "${var.name_prefix}-w-avset"
   location                     = var.location
   resource_group_name          = var.rg_name
-  platform_fault_domain_count  = 2
-  platform_update_domain_count = 2
-  managed                      = true
+  platform_fault_domain_count  = var.avs_fault_domains
+  platform_update_domain_count = var.avs_update_domains
+  managed                      = var.avs_managed
   tags                         = var.tags
 }
 
@@ -13,8 +13,8 @@ resource "azurerm_public_ip" "pip" {
   name                = "${var.name_prefix}-w-vm${count.index + 1}-pip"
   resource_group_name = var.rg_name
   location            = var.location
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  allocation_method   = var.pip_allocation_method
+  sku                 = var.pip_sku
   domain_name_label   = "${var.name_prefix}-win-${count.index + 1}"
   tags                = var.tags
 }
@@ -27,9 +27,9 @@ resource "azurerm_network_interface" "nic" {
   tags                = var.tags
 
   ip_configuration {
-    name                          = "internal"
+    name                          = var.nic_ip_config_name
     subnet_id                     = var.subnet_id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = var.private_ip_allocation
     public_ip_address_id          = azurerm_public_ip.pip[count.index].id
   }
 }
@@ -47,8 +47,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
   tags                  = var.tags
 
   os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
+    caching              = var.os_disk_caching
+    storage_account_type = var.os_disk_storage_type
   }
 
   source_image_reference {
@@ -69,8 +69,8 @@ resource "azurerm_virtual_machine_extension" "antimalware" {
   virtual_machine_id         = azurerm_windows_virtual_machine.vm[count.index].id
   publisher                  = "Microsoft.Azure.Security"
   type                       = "IaaSAntimalware"
-  type_handler_version       = "1.3"
-  auto_upgrade_minor_version = true
+  type_handler_version       = var.antimalware_version
+  auto_upgrade_minor_version = var.ext_auto_upgrade
   tags                       = var.tags
 
   settings = jsonencode({

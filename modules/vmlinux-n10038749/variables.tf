@@ -74,3 +74,56 @@ variable "image_version" {
   type        = string
   default     = "latest"
 }
+variable "pip_allocation_method" {
+  description = "Public IP allocation method"
+  type        = string
+  default     = "Static"
+}
+
+variable "pip_sku" {
+  description = "Public IP SKU"
+  type        = string
+  default     = "Standard"
+}
+
+variable "nic_ip_config_name" {
+  description = "NIC IP configuration name"
+  type        = string
+  default     = "internal"
+}
+
+variable "private_ip_allocation" {
+  description = "Private IP allocation method"
+  type        = string
+  default     = "Dynamic"
+}
+
+variable "os_disk_caching" {
+  description = "OS disk caching mode"
+  type        = string
+  default     = "ReadWrite"
+}
+
+variable "os_disk_storage_type" {
+  description = "OS disk storage account type"
+  type        = string
+  default     = "Standard_LRS"
+}
+
+variable "network_watcher_version" {
+  description = "Network Watcher extension type handler version"
+  type        = string
+  default     = "1.0"
+}
+
+variable "monitor_agent_version" {
+  description = "Azure Monitor agent extension type handler version"
+  type        = string
+  default     = "1.0"
+}
+
+variable "ext_auto_upgrade" {
+  description = "Auto-upgrade minor version for extensions"
+  type        = bool
+  default     = true
+}

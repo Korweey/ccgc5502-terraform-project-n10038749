@@ -11,8 +11,8 @@ resource "azurerm_public_ip" "pip" {
   name                = "${var.name_prefix}-u-vm${each.key}-pip"
   resource_group_name = var.rg_name
   location            = var.location
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  allocation_method   = var.pip_allocation_method
+  sku                 = var.pip_sku
   zones               = [each.value]
   domain_name_label   = "${var.name_prefix}-linux-${each.key}"
   tags                = var.tags
@@ -26,9 +26,9 @@ resource "azurerm_network_interface" "nic" {
   tags                = var.tags
 
   ip_configuration {
-    name                          = "internal"
+    name                          = var.nic_ip_config_name
     subnet_id                     = var.subnet_id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = var.private_ip_allocation
     public_ip_address_id          = azurerm_public_ip.pip[each.key].id
   }
 }
@@ -50,8 +50,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
+    caching              = var.os_disk_caching
+    storage_account_type = var.os_disk_storage_type
   }
 
   source_image_reference {
@@ -72,8 +72,8 @@ resource "azurerm_virtual_machine_extension" "network_watcher" {
   virtual_machine_id         = azurerm_linux_virtual_machine.vm[each.key].id
   publisher                  = "Microsoft.Azure.NetworkWatcher"
   type                       = "NetworkWatcherAgentLinux"
-  type_handler_version       = "1.0"
-  auto_upgrade_minor_version = true
+  type_handler_version       = var.network_watcher_version
+  auto_upgrade_minor_version = var.ext_auto_upgrade
   tags                       = var.tags
 }
 
@@ -83,7 +83,7 @@ resource "azurerm_virtual_machine_extension" "azure_monitor" {
   virtual_machine_id         = azurerm_linux_virtual_machine.vm[each.key].id
   publisher                  = "Microsoft.Azure.Monitor"
   type                       = "AzureMonitorLinuxAgent"
-  type_handler_version       = "1.0"
-  auto_upgrade_minor_version = true
+  type_handler_version       = var.monitor_agent_version
+  auto_upgrade_minor_version = var.ext_auto_upgrade
   tags                       = var.tags
 }

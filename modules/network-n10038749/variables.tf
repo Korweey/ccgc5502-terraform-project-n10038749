@@ -40,3 +40,23 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+variable "security_rules" {
+  description = "Inbound NSG rules"
+  type = list(object({
+    name                       = string
+    priority                   = number
+    destination_port_range     = string
+    direction                  = optional(string, "Inbound")
+    access                     = optional(string, "Allow")
+    protocol                   = optional(string, "Tcp")
+    source_port_range          = optional(string, "*")
+    source_address_prefix      = optional(string, "*")
+    destination_address_prefix = optional(string, "*")
+  }))
+  default = [
+    { name = "Allow-SSH", priority = 100, destination_port_range = "22" },
+    { name = "Allow-RDP", priority = 110, destination_port_range = "3389" },
+    { name = "Allow-WinRM", priority = 120, destination_port_range = "5985" },
+    { name = "Allow-HTTP", priority = 130, destination_port_range = "80" },
+  ]
+}

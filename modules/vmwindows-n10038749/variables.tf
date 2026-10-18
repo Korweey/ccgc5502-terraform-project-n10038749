@@ -76,3 +76,68 @@ variable "image_version" {
   type        = string
   default     = "latest"
 }
+variable "avs_fault_domains" {
+  description = "Availability set platform fault domain count"
+  type        = number
+  default     = 2
+}
+
+variable "avs_update_domains" {
+  description = "Availability set platform update domain count"
+  type        = number
+  default     = 2
+}
+
+variable "avs_managed" {
+  description = "Whether the availability set is managed"
+  type        = bool
+  default     = true
+}
+
+variable "pip_allocation_method" {
+  description = "Public IP allocation method"
+  type        = string
+  default     = "Static"
+}
+
+variable "pip_sku" {
+  description = "Public IP SKU"
+  type        = string
+  default     = "Standard"
+}
+
+variable "nic_ip_config_name" {
+  description = "NIC IP configuration name"
+  type        = string
+  default     = "internal"
+}
+
+variable "private_ip_allocation" {
+  description = "Private IP allocation method"
+  type        = string
+  default     = "Dynamic"
+}
+
+variable "os_disk_caching" {
+  description = "OS disk caching mode"
+  type        = string
+  default     = "ReadWrite"
+}
+
+variable "os_disk_storage_type" {
+  description = "OS disk storage account type"
+  type        = string
+  default     = "Standard_LRS"
+}
+
+variable "antimalware_version" {
+  description = "IaaSAntimalware extension type handler version"
+  type        = string
+  default     = "1.3"
+}
+
+variable "ext_auto_upgrade" {
+  description = "Auto-upgrade minor version for extensions"
+  type        = bool
+  default     = true
+}
