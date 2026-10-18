@@ -15,7 +15,7 @@ resource "azurerm_public_ip" "pip" {
   location            = var.location
   allocation_method   = "Static"
   sku                 = "Standard"
-  domain_name_label   = "${var.name_prefix}-windows-${count.index + 1}"
+  domain_name_label   = "${var.name_prefix}-win-${count.index + 1}"
   tags                = var.tags
 }
 

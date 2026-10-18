@@ -54,19 +54,19 @@ variable "tags" {
 variable "image_publisher" {
   description = "Image publisher"
   type        = string
-  default     = "OpenLogic"
+  default     = "Canonical"
 }
 
 variable "image_offer" {
   description = "Image offer"
   type        = string
-  default     = "CentOS"
+  default     = "ubuntu-24_04-lts"
 }
 
 variable "image_sku" {
-  description = "Image SKU (Gen2 build of CentOS 8.2)"
+  description = "Image SKU (Ubuntu 24.04 LTS (NVMe-capable, Gen2))"
   type        = string
-  default     = "8_2-gen2"
+  default     = "server"
 }
 
 variable "image_version" {
