@@ -1,6 +1,11 @@
 # CCGC 5502 Terraform Project (N10038749)
 
-Student: Qawiyy Adebayo Rabiu | Course: CCGC 5502 Automation | Instructor: Prof. Asghar Ghori
+| Name | Student ID |
+|------|------------|
+| Qawiyy Adebayo Rabiu | N10038749 |
+| Saheedat Abbas Olasumbo | N10038753 |
+| Course | CCGC 5502 - Automation | 
+| Instructor | Prof. Asghar Ghori |
 
 Deploys a complete Azure environment with a root module and 8 child modules, using a remote azurerm backend. A clean run creates exactly 48 resources.
 
