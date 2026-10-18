@@ -48,3 +48,14 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+variable "backup_retention_days" {
+  description = "Database backup retention in days"
+  type        = number
+  default     = 7
+}
+
+variable "public_network_access_enabled" {
+  description = "Allow public network access to the database"
+  type        = bool
+  default     = true
+}
