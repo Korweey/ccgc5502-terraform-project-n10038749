@@ -182,3 +182,9 @@ variable "db_backup_retention_days" {
   type        = number
   default     = 7
 }
+
+variable "db_location" {
+  description = "Region for the PostgreSQL server (no PostgreSQL offer for this subscription in eastus)"
+  type        = string
+  default     = "canadacentral"
+}

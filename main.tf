@@ -103,7 +103,7 @@ module "database" {
   storage_mb            = var.db_storage_mb
   backup_retention_days = var.db_backup_retention_days
   rg_name               = module.rgroup.rg_name
-  location              = var.location
+  location              = var.db_location
   name_prefix           = var.humber_id
   admin_password        = var.db_admin_password
   tags                  = local.common_tags

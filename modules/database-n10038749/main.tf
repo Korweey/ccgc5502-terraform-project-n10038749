@@ -1,5 +1,9 @@
 resource "azurerm_postgresql_flexible_server" "db" {
-  name                          = "${var.name_prefix}-psql"
+  name                          = "${var.name_prefix}-pg"
+  lifecycle {
+    ignore_changes = [zone]
+  }
+
   resource_group_name           = var.rg_name
   location                      = var.location
   version                       = var.pg_version
