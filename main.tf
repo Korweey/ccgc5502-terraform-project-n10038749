@@ -15,27 +15,34 @@ module "rgroup" {
 }
 
 module "network" {
-  source      = "./modules/network-n10038749"
-  rg_name     = module.rgroup.rg_name
-  location    = var.location
-  vnet_name   = "${var.humber_id}-VNET"
-  subnet_name = "${var.humber_id}-SUBNET"
-  nsg_name    = "${var.humber_id}-NSG"
-  tags        = local.common_tags
+  source          = "./modules/network-n10038749"
+  address_space   = var.vnet_address_space
+  subnet_prefixes = var.subnet_prefixes
+  rg_name         = module.rgroup.rg_name
+  location        = var.location
+  vnet_name       = "${var.humber_id}-VNET"
+  subnet_name     = "${var.humber_id}-SUBNET"
+  nsg_name        = "${var.humber_id}-NSG"
+  tags            = local.common_tags
 }
 
 module "common" {
-  source   = "./modules/common-n10038749"
-  rg_name  = module.rgroup.rg_name
-  location = var.location
-  law_name = "${var.humber_id}-LAW"
-  rsv_name = "${var.humber_id}-RSV"
-  sa_name  = "${var.humber_id}sa"
-  tags     = local.common_tags
+  source             = "./modules/common-n10038749"
+  law_retention_days = var.law_retention_days
+  rg_name            = module.rgroup.rg_name
+  location           = var.location
+  law_name           = "${var.humber_id}-LAW"
+  rsv_name           = "${var.humber_id}-RSV"
+  sa_name            = "${var.humber_id}sa"
+  tags               = local.common_tags
 }
 
 module "vmlinux" {
   source               = "./modules/vmlinux-n10038749"
+  vm_size              = var.linux_vm_size
+  image_publisher      = var.linux_image_publisher
+  image_offer          = var.linux_image_offer
+  image_sku            = var.linux_image_sku
   rg_name              = module.rgroup.rg_name
   location             = var.location
   name_prefix          = var.humber_id
@@ -49,6 +56,11 @@ module "vmlinux" {
 
 module "vmwindows" {
   source              = "./modules/vmwindows-n10038749"
+  vm_size             = var.windows_vm_size
+  vm_count            = var.windows_vm_count
+  image_publisher     = var.windows_image_publisher
+  image_offer         = var.windows_image_offer
+  image_sku           = var.windows_image_sku
   rg_name             = module.rgroup.rg_name
   location            = var.location
   name_prefix         = var.humber_id
@@ -61,6 +73,7 @@ module "vmwindows" {
 
 module "datadisk" {
   source         = "./modules/datadisk-n10038749"
+  disk_size_gb   = var.data_disk_size_gb
   rg_name        = module.rgroup.rg_name
   location       = var.location
   name_prefix    = var.humber_id
@@ -72,6 +85,10 @@ module "datadisk" {
 
 module "loadbalancer" {
   source        = "./modules/loadbalancer-n10038749"
+  sku           = var.lb_sku
+  probe_port    = var.lb_probe_port
+  frontend_port = var.lb_frontend_port
+  backend_port  = var.lb_backend_port
   rg_name       = module.rgroup.rg_name
   location      = var.location
   name_prefix   = var.humber_id
@@ -80,10 +97,14 @@ module "loadbalancer" {
 }
 
 module "database" {
-  source         = "./modules/database-n10038749"
-  rg_name        = module.rgroup.rg_name
-  location       = var.location
-  name_prefix    = var.humber_id
-  admin_password = var.db_admin_password
-  tags           = local.common_tags
+  source                = "./modules/database-n10038749"
+  pg_version            = var.db_pg_version
+  sku_name              = var.db_sku_name
+  storage_mb            = var.db_storage_mb
+  backup_retention_days = var.db_backup_retention_days
+  rg_name               = module.rgroup.rg_name
+  location              = var.location
+  name_prefix           = var.humber_id
+  admin_password        = var.db_admin_password
+  tags                  = local.common_tags
 }
