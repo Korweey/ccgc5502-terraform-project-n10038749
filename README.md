@@ -3,20 +3,20 @@
 | Name | Student ID |
 |------|------------|
 | Qawiyy Adebayo Rabiu | N10038749 |
-| Saheedat Abbas Olasumbo | N10038753 |
+| Saheedat Olasumbo Abbas | N10038753 |
 | Course | CCGC 5502 - Automation | 
 | Instructor | Prof. Asghar Ghori |
 
 Deploys a complete Azure environment with a root module and 8 child modules, using a remote azurerm backend. A clean run creates exactly 48 resources.
 
-## What gets deployed (eastus)
+## What gets deployed (eastus, with PostgreSQL in canadacentral)
 - Resource group, VNet, subnet, NSG (rules driven by a variable)
 - Log Analytics workspace, Recovery Services vault, storage account
 - 3 Linux VMs (Ubuntu 24.04, one per availability zone, for_each) with public IPs, a remote-exec provisioner that sets the hostname, and Network Watcher and Azure Monitor extensions
 - 1 Windows Server 2022 VM (count) in an availability set with the antimalware extension
 - 4 data disks (3 Linux, 1 Windows)
 - Standard public load balancer in front of the Linux VMs (HTTP 80)
-- PostgreSQL Flexible Server (v16, burstable)
+- - PostgreSQL Flexible Server (v16, burstable), deployed in canadacentral through the db_location variable
 
 ## Layout
 - providers.tf, backend.tf, variables.tf, main.tf, outputs.tf (root)
@@ -51,6 +51,7 @@ All module settings are variables with defaults. The most useful ones are expose
 
 ## Design decisions
 - Region eastus: it has availability zones and the needed VM SKUs are unrestricted on the subscription (Canada Central had B1s/B2s/D2s_v3 blocked).
+- - PostgreSQL in canadacentral: the subscription has no PostgreSQL Flexible Server offer in eastus, so the database uses its own db_location variable while every other resource stays in eastus. Cross region traffic between the VMs and the database is acceptable for this project because nothing in the deployment depends on low latency database calls.
 - Load balancer uses the Standard SKU: Basic was retired by Azure on 30 Sep 2025 and cannot front zonal VMs.
 - Linux VMs use for_each (keyed by zone); the Windows VM uses count; the hostname provisioner uses terraform_data so it adds no extra provider.
 - Passwords are supplied as sensitive variables rather than generated in Terraform, which keeps the state at exactly 48 resources.
